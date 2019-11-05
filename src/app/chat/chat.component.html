@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="panel panel-primary">
+      <div class="panel-heading mt-2">
+          Bienvenido al Chat. Pide recomendaciones y comparte tus experiencias!
+        </div>
+      </div>
+      <hr>
+      <div class="panel-body" #scrollBottom>
+        <ul class="chat">
+          <li class="left clearfix" *ngFor="let
+          message of messages"><span class="chat-img pull-left" >
+              <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User
+                Avatar" class="img-circle" />
+            </span>
+            <div class="chat-body clearfix">
+              <div class="header">
+                <strong class="primary-font">{{ message.username }}</strong>
+                <small class="pull-right text-muted">
+                  <span class="glyphicon glyphicon-time"></span>{{ message.fecha | date:'short' }}</small>
+              </div>
+              <p>
+                {{ message.message }}
+              </p>
+            </div>
+          </li>
+  
+        </ul>
+      </div>
+      <div class="panel-footer">
+        <div class="input-group md-form">
+          <input mdbInput id="btn-input" type="text" [(ngModel)]="message"
+            (keyup)="$event.keyCode == 13 && sendMessage()" class="form-control
+            input-sm" placeholder="Escribe tu mensaje aqui..." />
+          <span class="input-group-btn">
+            <button class="btn btn-warning btn-sm" (click)="sendMessage()"
+              id="btn-chat">
+              Enviar</button>
+          </span>
+        </div>
+      </div>
+    </div>
