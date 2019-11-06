@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.clear()
   }
 
   login(){
@@ -29,13 +30,15 @@ export class LoginComponent implements OnInit {
       if(result.length > 0){
         if(String(CryptoJS.AES.decrypt(this.logeo[0].payload.doc.data().password, "key").toString(CryptoJS.enc.Utf8)) == this.login_form.get("password").value){
           console.log("Entro")
-          this.api.createLog({tipo: "Success", descripcion: "Usuario "+this.login_form.get("correo").value+" logeado correctamente"})
+          this.api.createLog({tipo: "Success", descripcion: "Usuario "+this.login_form.get("correo").value+" logeado correctamente", fecha: new Date()})
           localStorage.setItem("user",this.logeo[0].payload.doc.data().nombre)
           this.route.navigateByUrl("/chat")
         }else{
           console.log("Contraseña incorrecta")
-          this.api.createLog({tipo: "Error", descripcion: "Contraseña para "+this.login_form.get("correo").value+" incorrecta"})
+          this.api.createLog({tipo: "Error", descripcion: "Contraseña para "+this.login_form.get("correo").value+" incorrecta", fecha: new Date()})
         }
+      }else{
+        this.api.createLog({tipo: "Error", descripcion: "Credenciales incorrectas", fecha: new Date()})
       }
     })
   }

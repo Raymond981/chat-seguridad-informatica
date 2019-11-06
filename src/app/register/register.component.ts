@@ -39,10 +39,10 @@ export class RegisterComponent implements OnInit {
 
     this.api.searchEmail(user.correo).subscribe(result =>{
       if(result.length > 0){
-        this.api.createLog({tipo: "Error", descripcion: "El correo "+user.correo+" ya se encuentra en nuestro sistema."})
+        this.api.createLog({tipo: "Error", descripcion: "El correo "+user.correo+" ya se encuentra en nuestro sistema.", fecha: new Date()})
       }else{
         this.api.createUser(user).then(result =>{
-          this.api.createLog({tipo: "Success", descripcion: "Usuario "+user.correo+" registrado correctamente"})
+          this.api.createLog({tipo: "Success", descripcion: "Usuario "+user.correo+" registrado correctamente", fecha: new Date()})
           localStorage.setItem("user", user.nombre)
           this.route.navigateByUrl("/chat")
         }, error =>{

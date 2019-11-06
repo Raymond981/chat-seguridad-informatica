@@ -22,7 +22,8 @@ export class FirebaseService {
   createLog(value: any){
     return this.db.collection("/logs").add({
       tipo: value.tipo,
-      descripcion: value.descripcion
+      descripcion: value.descripcion,
+      fecha: value.fecha
     })
   }
 

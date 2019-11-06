@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { ChatService } from '../services/chat.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -16,12 +17,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   currentUser: any;
  constructor(
     private chatService: ChatService,
+    private route: Router
   ) {
     this.messages = this.chatService.messages;
   }
 
   ngOnInit() {
     //this.scrollToBottom();
+    if(!localStorage.getItem('user')){
+      this.route.navigateByUrl("/")
+    }
   }
 
   ngAfterViewChecked() {
@@ -35,7 +40,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }*/
  
   sendMessage() {
-    console.log("message");
     let messageObj = { username: localStorage.getItem('user'), message: this.message, fecha: new Date() };
     this.chatService.sendMessage(messageObj)
     this.message = '';

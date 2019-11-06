@@ -17,7 +17,10 @@ export class ChatService {
     this.socket = io(this.url);
     
     this.socket.on('new-message', (message) => {
-      console.log("des", message.message)
+
+      if(message.username != localStorage.getItem("user"))
+        console.log("mensaje recibido (encriptado): ", message.message)
+
       message.message = String(CryptoJS.AES.decrypt(message.message, "key").toString(CryptoJS.enc.Utf8));  
       //console.log(message.message)
       this.messages.push(message);
@@ -28,7 +31,7 @@ export class ChatService {
   public sendMessage(message) {
     message.message = String(CryptoJS.AES.encrypt(message.message, "key"));
     // = encrypt
-    console.log(message.message)
+    console.log("mensaje enviado (encriptado): ",message.message)
     this.socket.emit('new-message', message);
   }  
 
